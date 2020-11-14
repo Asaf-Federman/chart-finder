@@ -4,7 +4,7 @@
 
 ### ***Usage:*** 
 
-1. Start the container by `Docker run asaff/chart_finder:[tag] [flags]`
+1. Start the container by `docker run [docker flags] asaff/chart_finder:[tag] [script flags]`
 
 ### ***Options and Flags:*** 
 
@@ -16,10 +16,17 @@
     -u -- username (Optional - incase a private repository needs to be added)
     -p -- password (Optional - incase a private repository needs to be added)
 
-### ***Example:*** 
+### ***Examples:*** 
+
+#### to add a new chart
 
     docker run chart_finder:latest -n center -a https://repo.chartcenter.io -v 6.5.9 -m jfrog/artifactory
     7.7.12
+
+#### to use existing charts
+
+    docker run -v ~/.config/helm:/root/.config/helm -v ~/.cache/helm:/root/.cache/helm asaff/chart_finder -n center -v 3.8.8 -m jfrog/xray
+    6.0.6
 
 ### ***NOTES:***
 

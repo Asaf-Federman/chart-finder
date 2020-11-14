@@ -66,11 +66,12 @@ done
 
 verifyFlags "${repository_name}" "${chart}" "${app_version}"
 if [[ -n "${repository_url}" ]]; then
+   credentials=
     if [[ -n "${username}" && -n "${password}" ]]; then
-        repository_url=${repository_url//\/\//\/\/$username:$password@}
+        credentials="--username ${username} --password ${password}"
     fi
     
-    helm repo add "${repository_name}" "${repository_url}" 1> /dev/null || error "Failed to add ${repository_name} ${repository_url} as a new helm repository"
+    helm repo add "${repository_name}" "${repository_url}" ${credentials} 1> /dev/null || error "Failed to add ${repository_name} ${repository_url} as a new helm repository"
 else
     [[ -n $(awk ' $1 == "'"${repository_name}"'" ' <<< "$(helm repo list)") ]] || error "Can not find a helm repository named: ${repository_name}"
 fi
